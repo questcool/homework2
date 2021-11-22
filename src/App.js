@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Hooks from "./components/HooksNavigator";
+import MainPage from "./components/MainPage";
+import MyWrappedComponent from "./hoc/WrappedComponent";
+import MyCustomHook from "./hook/MyCustomHook";
+import React from "react";
+import Mouse from "./renderProp/Mouse";
+import MyContext from "./hook/MyContext";
+
+const secret = "my secret";
+export const SecretContext = React.createContext();
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SecretContext.Provider value={secret}>
+        <Router>
+          <div className="content">
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/hoc" element={<MyWrappedComponent />} />
+              <Route path="/renderprop" element={<Mouse />} />
+              <Route path="/hooks" element={<Hooks />} />
+              <Route path="/hooks/customhook" element={<MyCustomHook />} />
+              <Route path="/hooks/context" element={<MyContext />} />
+            </Routes>
+          </div>
+        </Router>
+      </SecretContext.Provider>
     </div>
   );
 }
